@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Tasty Pizza & Burger — Black Friday Menu</title>
+
+  <!-- Open Graph / WhatsApp / Telegram preview -->
+  <meta property="og:title" content="Tasty Pizza & Burger — Black Friday Menu">
+  <meta property="og:description" content="Hot deals, fresh pizzas, smashing burgers. Order on WhatsApp in one tap.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://example.com/">
+  <meta property="og:image" content="https://example.com/og-tasty.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0b0b0d;
+      --card:#141417;
+      --soft:#1b1b20;
+      --muted:#b0b0b6;
+      --ink:#f5f5f6;
+      --red:#ef4444;
+      --gold:#f5c542;
+      --ring:0 0 0 3px rgba(245,197,66,.28);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%}
+    body{background:var(--bg);color:var(--ink);font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+
+    a{color:#ffd27a;text-decoration:none}
+    .container{max-width:1100px;margin:0 auto;padding:18px}
+
+    header{
+      position:sticky;top:0;z-index:40;
+      backdrop-filter:saturate(140%) blur(6px);
+      background:linear-gradient(180deg, rgba(20,20,23,.94), rgba(20,20,23,.82));
+      border-bottom:1px solid #222;
+    }
+    .bar{display:flex;align-items:center;gap:14px;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:10px}
+    .logo{width:40px;height:40px;border-radius:50%;background:#fff url('./img/logo.png') center/cover no-repeat;border:2px solid #ff3b6a}
+    .title{font-weight:800;letter-spacing:.3px}
+    .sub{color:var(--muted);font-size:12px}
+
+    .lang{display:flex;gap:8px}
+    .flag{cursor:pointer;border:1px solid #2a2a2f;border-radius:999px;padding:6px 10px;background:linear-gradient(180deg,#1b1b20,#111);display:flex;align-items:center;gap:8px}
+    .flag img{width:18px;height:18px;border-radius:50%}
+    .flag.active{outline:3px solid rgba(255,255,255,.08);border-color:#444}
+
+    .hero{
+      margin:22px 0;border-radius:var(--radius);padding:22px;
+      background:
+        radial-gradient(1100px 280px at 8% -40%, rgba(239,68,68,.20), transparent 60%),
+        radial-gradient(900px 240px at 92% -18%, rgba(245,197,66,.22), transparent 60%),
+        linear-gradient(135deg, #151519, #0f0f13);
+      border:1px solid #232327;
+    }
+    .badge{
+      display:inline-block;margin:10px 0 10px;padding:6px 12px;border-radius:999px;
+      background:linear-gradient(90deg,#b91c1c,#ef4444,#f97316);
+      color:#fff;font-weight:800;letter-spacing:.4px;border:1px solid #451010
+    }
+    .hero h1{margin:0 0 8px;font-size:clamp(24px,3.6vw,36px)}
+    .gold{color:var(--gold);text-shadow:0 0 10px rgba(245,197,66,.25)}
+    .muted{color:var(--muted)}
+
+    .tabs{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 18px}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid #2a2a2f;background:linear-gradient(180deg,#1b1b20,#141417);cursor:pointer;font-weight:700;color:var(--ink)}
+    .pill.active{box-shadow:var(--ring);border-color:#3a2}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+    .card{background:var(--card);border:1px solid #232327;border-radius:20px;overflow:hidden;display:flex;flex-direction:column}
+    .img{aspect-ratio:1/1; background:#0e0e11 url('./img/pizza.jpg') center/cover no-repeat}
+    .card .body{padding:14px 14px 10px}
+    .name{font-weight:800}
+    .desc{color:#cfcfd4;font-size:13px;margin:6px 0 10px;min-height:36px}
+    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+    select, .qty, .btn{
+      border:1px solid #2a2a30;background:#16161a;color:var(--ink);border-radius:12px;
+    }
+    select{padding:8px 10px}
+    .qty{display:flex;align-items:center;gap:10px;padding:6px 10px}
+    .qty button{border:none;background:none;color:var(--ink);font-size:18px;cursor:pointer}
+    .price{font-weight:800;color:#ff7da3}
+    .btn{padding:10px 12px;font-weight:800;cursor:pointer}
+    .btn.add{background:#e11d48;border-color:#e11d48}
+    .btn.add:hover{filter:brightness(1.1)}
+    .tag{position:absolute;left:10px;top:10px;background:#e11d48;color:#fff;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:800}
+
+    .fab{position:fixed;right:18px;bottom:18px;background:#22c55e;color:#062b14;border:none;border-radius:999px;padding:14px 18px;font-weight:900;cursor:pointer;box-shadow:0 10px 25px rgba(34,197,94,.35);z-index:50}
+    .drawer{position:fixed;inset:0;pointer-events:none;z-index:80}
+    .drawer.active{pointer-events:auto}
+    .overlay{position:absolute;inset:0;background:rgba(0,0,0,.55);opacity:0;transition:.2s}
+    .drawer.active .overlay{opacity:1}
+    .panel{
+      position:absolute;right:-420px;top:0;height:100svh;width:min(92vw,380px);
+      background:#111114;border-left:1px solid #232327;transition:.25s;padding:18px;display:flex;flex-direction:column;gap:12px;overflow:auto;-webkit-overflow-scrolling:touch
+    }
+    .drawer.active .panel{right:0}
+    .cart-item{display:grid;grid-template-columns:64px 1fr auto;gap:10px;align-items:center;border-bottom:1px dashed #2b2b30;padding:8px 0}
+    .cart-item img{width:64px;height:64px;border-radius:12px;object-fit:cover;background:#0e0e11}
+    .meta{font-size:12.5px;color:#c2c2c2}
+    .totals{margin-top:auto;border-top:1px solid #2b2b30;padding-top:10px}
+    .cta{display:flex;flex-direction:column;gap:10px}
+    .btn.secondary{background:linear-gradient(90deg,#2b2b31,#1b1b20);color:#e8e8ea;border:1px solid #2a2a30}
+    .btn.wa{background:#25d366;color:#073b16;border:1px solid #0c4}
+    footer{margin:40px 0 80px;color:var(--muted);text-align:center}
+
+    /* RTL support when <html dir="rtl"> */
+    html[dir="rtl"] .row{flex-direction:row-reverse}
+    html[dir="rtl"] .tag{left:auto;right:10px}
+    html[dir="rtl"] .cart-item{grid-template-columns:auto 1fr 64px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container bar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div class="title" data-i18n="brand">Tasty Pizza & Burger</div>
+          <div class="sub" data-i18n="slogan">Hot. Fresh. Fast.</div>
+        </div>
+      </div>
+      <div class="lang" aria-label="Language">
+        <button class="flag active" id="btn-en" data-lang="en" title="English">
+          <img alt="English" src="https://flagcdn.com/gb.svg"> EN
+        </button>
+        <button class="flag" id="btn-ar" data-lang="ar" title="العربية">
+          <img alt="Arabic" src="https://flagcdn.com/sa.svg"> AR
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <span class="badge" data-i18n="bf_badge">BLACK FRIDAY • LIMITED TIME</span>
+      <h1><span class="gold" data-i18n="bf_title_gold">Big Deals</span> <span data-i18n="bf_title_rest">on Pizza & Burgers</span></h1>
+      <p class="muted" data-i18n="bf_desc">Choose size and extras, add to cart and finish via WhatsApp. Pickup or delivery.</p>
+    </section>
+
+    <nav class="tabs" id="tabs"></nav>
+    <section id="catalog" class="grid" aria-live="polite"></section>
+  </main>
+
+  <button class="fab" id="fabCart">🛒 <span data-i18n="cart">Cart</span> <span id="fabCount">0</span></button>
+
+  <div class="drawer" id="drawer">
+    <div class="overlay" id="overlay"></div>
+    <aside class="panel">
+      <h2 style="margin:0" data-i18n="your_cart">Your order</h2>
+      <div id="cartList"></div>
+      <div class="totals">
+        <div class="row" style="justify-content:space-between">
+          <strong data-i18n="total">Total</strong>
+          <strong id="cartTotal">£0.00</strong>
+        </div>
+      </div>
+      <div class="cta">
+        <button class="btn secondary" id="btnClear" data-i18n="clear">Clear cart</button>
+        <button class="btn wa" id="btnWhats" disabled data-i18n="finish_wa">Finish on WhatsApp</button>
+      </div>
+    </aside>
+  </div>
+
+  <footer class="container">
+    <p data-i18n="foot_note">Prices in GBP. Images illustrative. Black Friday deals while stocks last.</p>
+    <p>© <span id="y"></span> Tasty Pizza & Burger</p>
+  </footer>
+
+<script>
+/* ===================== CONFIG ===================== */
+const STORE = {
+  whatsapp: "+447931217826",     // <- confirme/edite
+  currency: "£"
+};
+
+/* ===================== I18N ===================== */
+const I18N = {
+  en: {
+    brand: "Tasty Pizza & Burger",
+    slogan: "Hot. Fresh. Fast.",
+    bf_badge: "BLACK FRIDAY • LIMITED TIME",
+    bf_title_gold: "Big Deals",
+    bf_title_rest: "on Pizza & Burgers",
+    bf_desc: "Choose size and extras, add to cart and finish via WhatsApp. Pickup or delivery.",
+    tabs: ["Pizzas","Burgers","Wraps","Sides","Deals","Drinks"],
+    add: "Add",
+    size: "Size",
+    qty: "Qty",
+    from: "from",
+    cart: "Cart",
+    your_cart: "Your order",
+    total: "Total",
+    clear: "Clear cart",
+    finish_wa: "Finish on WhatsApp",
+    foot_note: "Prices in GBP. Images illustrative. Black Friday deals while stocks last.",
+    wa_header: "Order via Black Friday menu",
+    wa_items: "Items"
+  },
+  ar: {
+    brand: "تيْسْتي بيتزا وبرغر",
+    slogan: "ساخنة وطازجة وسريعة",
+    bf_badge: "عروض الجمعة السوداء • لفترة محدودة",
+    bf_title_gold: "خصومات كبيرة",
+    bf_title_rest: "على البيتزا والبرغر",
+    bf_desc: "اختر الحجم والإضافات، أضِف إلى السلة وأكمل الطلب عبر واتساب. توصيل أو استلام.",
+    tabs: ["بيتزا","برغر","رابس","مقبلات","عروض","مشروبات"],
+    add: "أضِف",
+    size: "الحجم",
+    qty: "الكمية",
+    from: "ابتداءً من",
+    cart: "السلة",
+    your_cart: "طلبك",
+    total: "الإجمالي",
+    clear: "تفريغ السلة",
+    finish_wa: "أكمل عبر واتساب",
+    foot_note: "الأسعار بالجنيه الإسترليني. الصور للتوضيح. العروض سارية حتى نفاد الكمية.",
+    wa_header: "طلب عبر قائمة الجمعة السوداء",
+    wa_items: "المنتجات"
+  }
+};
+
+let LANG = "en";
+
+/* ===================== DATA (sample) ===================== */
+const CATS = ["pizzas","burgers","wraps","sides","deals","drinks"];
+
+const MENU = {
+ pizzas: [
+  {
+    id:"p-marg",
+    name:"Margherita",
+    desc_en:"Classic tomato & mozzarella.",
+    desc_ar:"صلصة طماطم مع جبنة موزاريلا.",
+    sizes:{'10"':5.99,'12"':7.99,'15"':9.99},
+    tag:"HOT",
+    img:"pizza-margherita.jpg"
+  },
+  {
+    id:"p-pep",
+    name:"Pepperoni",
+    desc_en:"Double pepperoni, mozzarella.",
+    desc_ar:"ببروني مزدوج مع موزاريلا.",
+    sizes:{'10"':6.99,'12"':8.99,'15"':11.49},
+    img:"pizza-pepperoni.jpg"
+  },
+  {
+    id:"p-meat",
+    name:"Meat Feast",
+    desc_en:"Pepperoni, beef, chicken.",
+    desc_ar:"ببروني ولحم بقري ودجاج.",
+    sizes:{'10"':7.49,'12"':9.99,'15"':12.99},
+    img:"pizza-meatfeast.jpg"
+  },
+  {
+    id:"p-veggie",
+    name:"Vegetarian Hot",
+    desc_en:"Fresh peppers, onion, olives, jalapeño.",
+    desc_ar:"فلفل طازج وبصل وزيتون وهالبينو.",
+    sizes:{'10"':6.49,'12"':8.49,'15"':10.99},
+    img:"pizza-veg.jpg"
+  }
+],
+
+burgers: [
+  {
+    id:"b-ch",
+    name:"Chicken Burger",
+    desc_en:"Crispy chicken, lettuce, mayo.",
+    desc_ar:"دجاج مقرمش وخس ومايونيز.",
+    sizes:{Meal:5.99, Single:4.49},
+    img:"burger-chicken.jpg"
+  },
+  {
+    id:"b-veggie",
+    name:"Veggie Burger",
+    desc_en:"Grilled veggie patty.",
+    desc_ar:"برغر نباتي مشوي.",
+    sizes:{Meal:5.49, Single:3.99},
+    img:"burger-veggie.jpg"
+  }
+],
+
+wraps: [
+  {
+    id:"w-ch",
+    name:"Chicken Wrap",
+    desc_en:"Chicken, salad, sauce.",
+    desc_ar:"دجاج وسلطة وصوص.",
+    sizes:{Regular:3.99, Meal:5.99},
+    img:"wrap-chicken.jpg"
+  },
+  {
+    id:"w-veg",
+    name:"Vegetable Wrap",
+    desc_en:"Fresh vegetables.",
+    desc_ar:"خضار طازجة.",
+    sizes:{Regular:3.49, Meal:5.49},
+    img:"wrap-veggie.jpg"
+  }
+],
+
+sides: [
+  {
+    id:"s-fries",
+    name:"Fries",
+    desc_en:"Crispy fries.",
+    desc_ar:"بطاطس مقلية مقرمشة.",
+    sizes:{Small:1.50, Large:2.50},
+    img:"side-fries.jpg"
+  },
+  {
+    id:"s-onion",
+    name:"Onion Rings (10)",
+    desc_en:"Golden rings.",
+    desc_ar:"حلقات بصل ذهبية.",
+    sizes:{Box:2.99},
+    img:"side-onionrings.jpg"
+  }
+],
+
+deals: [
+  {
+    id:"d-meal1",
+    name:"Meal 1",
+    desc_en:'Any 10" pizza + garlic bread + drink',
+    desc_ar:'أي بيتزا حجم 10" + خبز بالثوم + مشروب',
+    sizes:{Deal:12.50},
+    tag:"BF DEAL",
+    img:"deal-meal1.jpg"
+  },
+  {
+    id:"d-meal2",
+    name:"Meal 2",
+    desc_en:'2x 12" pizza + 1.5L drink',
+    desc_ar:'2 بيتزا 12" + مشروب 1.5 لتر',
+    sizes:{Deal:17.00},
+    img:"deal-meal2.jpg"
+  }
+],
+
+drinks: [
+  {
+    id:"dr-15coke",
+    name:"Coke/Pepsi 1.5L",
+    desc_en:"Cold.",
+    desc_ar:"بارد.",
+    sizes:{Bottle:3.00},
+    img:"drink-15l.jpg"
+  },
+  {
+    id:"dr-can",
+    name:"Can 330ml",
+    desc_en:"Various flavours.",
+    desc_ar:"نكهات متعددة.",
+    sizes:{Can:1.10},
+    img:"drink-can.jpg"
+  }
+]
+
+};
+
+/* ===================== RENDER ===================== */
+const elTabs = document.querySelector('#tabs');
+const elCatalog = document.querySelector('#catalog');
+
+function money(n){ return `${STORE.currency}${n.toFixed(2)}`; }
+
+function makeTabs(){
+  elTabs.innerHTML = '';
+  I18N[LANG].tabs.forEach((t,i)=>{
+    const b = document.createElement('button');
+    b.className = 'pill' + (i===0?' active':'');
+    b.textContent = t;
+    b.dataset.cat = CATS[i];
+    b.addEventListener('click', ()=>{
+      elTabs.querySelectorAll('.pill').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      renderCat(b.dataset.cat);
+    });
+    elTabs.appendChild(b);
+  });
+}
+
+function renderCat(catKey){
+  elCatalog.innerHTML = '';
+  (MENU[catKey]||[]).forEach(item=>{
+    const card = document.createElement('article');
+    card.className = 'card';
+    const img = (item.img ? `style="background-image:url('./img/${item.img}'),linear-gradient(#0e0e11,#0e0e11)"` : '');
+    card.innerHTML = `
+      <div class="img" ${img}></div>
+      ${item.tag?`<span class="tag">${item.tag}</span>`:''}
+      <div class="body">
+        <div class="name">${item.name}</div>
+        <div class="desc">${LANG==='en'?item.desc_en:item.desc_ar}</div>
+        <div class="row">
+          <label>
+            <span data-i18n="size">${I18N[LANG].size}</span>:
+            <select>
+              ${Object.entries(item.sizes).map(([k,v])=>`<option value="${v}">${k} — ${money(v)}</option>`).join('')}
+            </select>
+          </label>
+          <div class="qty" aria-label="${I18N[LANG].qty}">
+            <button class="minus">−</button>
+            <span class="q">1</span>
+            <button class="plus">+</button>
+          </div>
+        </div>
+        <div class="row" style="margin-top:8px">
+          <div class="price">${I18N[LANG].from} ${money(Math.min(...Object.values(item.sizes)))}</div>
+          <button class="btn add" data-id="${item.id}">${I18N[LANG].add}</button>
+        </div>
+      </div>`;
+    // wire qty
+    const qty = card.querySelector('.qty');
+    qty.addEventListener('click', e=>{
+      const span = qty.querySelector('.q'); let q = parseInt(span.textContent,10);
+      if(e.target.classList.contains('minus')) q = Math.max(1,q-1);
+      if(e.target.classList.contains('plus')) q = q+1;
+      span.textContent = q;
+    });
+    // add to cart
+    card.querySelector('.add').addEventListener('click', ()=>{
+      const sizeSel = card.querySelector('select');
+      const price = parseFloat(sizeSel.value);
+      const sizeName = sizeSel.options[sizeSel.selectedIndex].text.split(' — ')[0];
+      const q = parseInt(card.querySelector('.q').textContent,10);
+      state.cart.push({
+        id:item.id, name:item.name,
+        desc:(LANG==='en'?item.desc_en:item.desc_ar),
+        size:sizeName, price, q, img:item.img||'pizza.jpg'
+      });
+      renderCart(); openDrawer();
+    });
+    elCatalog.appendChild(card);
+  });
+}
+
+/* ===================== CART ===================== */
+const drawer = document.querySelector('#drawer');
+const overlay = document.querySelector('#overlay');
+const fab = document.querySelector('#fabCart');
+const fabCount = document.querySelector('#fabCount');
+const btnClear = document.querySelector('#btnClear');
+const btnWhats = document.querySelector('#btnWhats');
+
+const state = { cart: [] };
+
+function openDrawer(){ drawer.classList.add('active'); }
+function closeDrawer(){ drawer.classList.remove('active'); }
+overlay.addEventListener('click', closeDrawer); fab.addEventListener('click', openDrawer);
+
+function renderCart(){
+  const list = document.querySelector('#cartList');
+  list.innerHTML = '';
+  let total = 0;
+  state.cart.forEach((it,idx)=>{
+    total += it.price * it.q;
+    const row = document.createElement('div');
+    row.className = 'cart-item';
+    row.innerHTML = `
+      <img alt="" src="./img/${it.img}">
+      <div>
+        <div style="font-weight:800">${it.name}</div>
+        <div class="meta">${it.size} • ${I18N[LANG].qty}: ${it.q} • ${money(it.price)} ea</div>
+      </div>
+      <button class="btn" style="padding:8px" aria-label="Remove">✕</button>
+    `;
+    row.querySelector('button').addEventListener('click', ()=>{ state.cart.splice(idx,1); renderCart(); });
+    list.appendChild(row);
+  });
+  document.querySelector('#cartTotal').textContent = money(total);
+  fabCount.textContent = state.cart.reduce((a,b)=>a+b.q,0);
+  btnWhats.disabled = state.cart.length===0;
+}
+
+btnClear.addEventListener('click', ()=>{ state.cart = []; renderCart(); });
+
+btnWhats.addEventListener('click', ()=>{
+  if(state.cart.length===0) return;
+  const lines = state.cart.map(it=>`• ${it.name} (${it.size}) x${it.q} — ${money(it.price)} ea`).join('%0A');
+  const total = state.cart.reduce((s,it)=> s + it.price*it.q, 0);
+  const header = (LANG==='en') ? `${I18N[LANG].wa_header}` : `${I18N[LANG].wa_header}`;
+  const itemsLabel = (LANG==='en') ? I18N[LANG].wa_items : I18N[LANG].wa_items;
+  const msg =
+`${encodeURIComponent(header)}%0A%0A${encodeURIComponent(itemsLabel)}:%0A${lines}%0A%0ATotal: ${money(total)}%0ARef:${Date.now()}`;
+  const url = `https://wa.me/${STORE.whatsapp.replace(/\\D/g,'')}?text=${msg}`;
+  window.open(url,'_blank');
+});
+
+/* ===================== LANGUAGE SWITCH ===================== */
+function applyLang(){
+  // text nodes
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    if(I18N[LANG][key]) el.textContent = I18N[LANG][key];
+  });
+  // dir + lang
+  document.documentElement.lang = (LANG==='en'?'en':'ar');
+  document.documentElement.dir  = (LANG==='en'?'ltr':'rtl');
+  // buttons active
+  document.querySelectorAll('.flag').forEach(b=>b.classList.toggle('active', b.dataset.lang===LANG));
+  // rebuild tabs + first category
+  makeTabs(); renderCat(CATS[0]);
+  // remap cart labels (simple re-render)
+  renderCart();
+}
+
+document.querySelector('#btn-en').addEventListener('click', ()=>{ LANG='en'; applyLang(); });
+document.querySelector('#btn-ar').addEventListener('click', ()=>{ LANG='ar'; applyLang(); });
+
+/* ===================== INIT ===================== */
+document.querySelector('#y').textContent = new Date().getFullYear();
+applyLang();
+</script>
+</body>
+</html>
